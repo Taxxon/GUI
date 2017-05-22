@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class AWT extends Canvas {
     BufferedImage img;
 
     public AWT () {
+        LoadImageApp();
         Dimension dim = new Dimension(width, height);
         setPreferredSize(dim);
         frame = new JFrame("MYLIFEISAWSOME");
@@ -27,14 +29,25 @@ public class AWT extends Canvas {
     }
 
     public void LoadImageApp(){
+        //hämtar bilden
         try {
-            img = ImageIO.read(new File("Namnlös.img"));
+            img = ImageIO.read(new File("Namnlos.png"));
         } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    //ritar en gubbe
+    public Dimension getPreferredSize() {
+        //bestämer storleken på fönstret
+        if (img == null) {
+            return new Dimension( width, height);
+        } else {
+            return new Dimension( img.getWidth(null)+ width,  img.getHeight(null));
+        }
+    }
+
     public void paint(Graphics g) {
+        //ritar en gubbe
         g.setColor(Color.GREEN);
         g.drawOval(100, 100, 50, 50);
         g.drawRect(120, 150 ,10,15);
@@ -50,8 +63,15 @@ public class AWT extends Canvas {
         g.drawOval(50,340,50,20);
         g.drawOval(150, 340,50,20);
 
-        g.drawImage( img, 0, 0, null);
+        //ritar ut en bild med ett hus och ett träd
+        g.drawImage( img, 600, 0, null);
     }
+
+    public void keyTyped(KeyEvent e){
+        
+    }
+
+
 
     public static void main(String[] args) {
         AWT mittPRG = new AWT();
