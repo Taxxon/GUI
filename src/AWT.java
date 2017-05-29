@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,6 +17,8 @@ public class AWT extends Canvas {
     int width = 600;
     int height = 400;
     BufferedImage img;
+    Timer timer = null;
+    int offset = 0;
 
     public AWT () {
         LoadImageApp();
@@ -26,6 +29,7 @@ public class AWT extends Canvas {
         frame.pack();
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.addKeyListener(new KeyListener());
     }
 
     public void LoadImageApp(){
@@ -49,27 +53,52 @@ public class AWT extends Canvas {
     public void paint(Graphics g) {
         //ritar en gubbe
         g.setColor(Color.GREEN);
-        g.drawOval(100, 100, 50, 50);
-        g.drawRect(120, 150 ,10,15);
-        g.drawOval(100, 165, 50, 100);
-        g.drawRect(50, 200, 50,15);
-        g.drawRect(50, 160, 15, 40);
-        g.drawRect(150, 200, 50,15);
-        g.drawRect(185, 160, 15, 40);
-        g.drawLine(130, 265, 160 , 340);
-        g.drawLine(140, 255, 175 , 340);
-        g.drawLine(110, 255, 75, 340);
-        g.drawLine(120, 265, 90, 340);
-        g.drawOval(50,340,50,20);
-        g.drawOval(150, 340,50,20);
+        g.drawOval(100+offset, 100, 50, 50);
+        g.drawRect(120+offset, 150 ,10,15);
+        g.drawOval(100+offset, 165, 50, 100);
+        g.drawRect(50+offset, 200, 50,15);
+        g.drawRect(50+offset, 160, 15, 40);
+        g.drawRect(150+offset, 200, 50,15);
+        g.drawRect(185+offset, 160, 15, 40);
+        g.drawLine(130+offset, 265, 160+offset, 340);
+        g.drawLine(140+offset, 255, 175+offset, 340);
+        g.drawLine(110+offset, 255, 75+offset, 340);
+        g.drawLine(120+offset, 265, 90+offset, 340);
+        g.drawOval(50+offset,340,50,20);
+        g.drawOval(150+offset , 340,50,20);
 
         //ritar ut en bild med ett hus och ett träd
         g.drawImage( img, 600, 0, null);
     }
 
-    public void keyTyped(KeyEvent e){
-        
+    public class KeyListener extends KeyAdapter{
+
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        public void keyReleased(KeyEvent e){
+            switch (e.getKeyCode()) {
+
+                case KeyEvent.VK_SPACE:
+
+                    offset++;
+                    repaint();
+
+                    break;
+
+            }
+        }
+
     }
+
+
+
+
 
 
 
